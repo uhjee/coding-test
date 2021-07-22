@@ -74,3 +74,12 @@ var twoSum = function (nums, target) {
 
   > ***exactly\* one solution**,
 
+### 결과
+
+- Runtime
+
+   136 ms, faster than 29.54% of JavaScript online submissions for Two Sum.
+
+- Memory Usage
+
+  45.2 MB, less than 5.01% of JavaScript online submissions for Two Sum.
