@@ -67,4 +67,4 @@ function solution(arr) {
 }
 ```
 
-- 
+- splice를 사용했지만, 당연히 j가 i보다 큰 것을 활용해 순서만 바꿔줬다.. 신박하다
