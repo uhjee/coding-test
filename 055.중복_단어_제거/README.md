@@ -39,6 +39,18 @@ let str = ['good', 'time', 'good', 'time', 'student'];
 console.log(solution(str));
 ```
 
+## 풀이 2 데이터 구조 Set 사용
+
+```js
+function solution(s) {
+  return [...new Set(s)];
+}
+```
+
+- Set 은 중복을 허용하지 않고, 순서를 가지지 않는다.
+- 따라서 new Set의 생성자 매개변수로 배열을 전달해 중복을 제거하고,
+- 다시 구조분해할당으로 배열로 변환
+
 ## 선생님 풀이
 
 ```js
