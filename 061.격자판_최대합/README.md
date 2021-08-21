@@ -32,13 +32,15 @@ N*N의 격자판이 주어지면 각 행의 합, 각 열의 합, 두 대각선�
 function solution(arr) {
   let answer = Number.MIN_SAFE_INTEGER;
   let n = arr.length;
-  let sum1 = 0;
-  let sum2 = 0;
+  let sum1 = 0; // 가로 합
+  let sum2 = 0; // 세로 합
 
   for (let i = 0; i < n; i++) {
+    // 초기화
     sum1 = 0;
     sum2 = 0;
     for (let j = 0; j < n; j++) {
+      // i는 고정, j가 변동
       sum1 += arr[i][j]; // 가로
       sum2 += arr[j][i]; // 세로
     }
@@ -47,10 +49,10 @@ function solution(arr) {
   sum1 = 0;
   sum2 = 0;
 
-
+  // 대각선
   for (let i = 0; i < n; i++) {
-    sum1 += arr[i][i];
-    sum2 += arr[i][n - i - 1];
+    sum1 += arr[i][i]; //    '\' 방향
+    sum2 += arr[i][n - i - 1]; // '/' 방향
   }
   answer = Math.max(answer, sum1, sum2);
 
@@ -67,6 +69,6 @@ let arr = [
 console.log(solution(arr));
 ```
 
-- 가로값, 세로값을 각각  sum1, sum2 의 값으로 구한다.
+- 가로값, 세로값을 각각 sum1, sum2 의 값으로 구한다.
 - 개중에 가장 큰 값을 answer에 할당
 - 대각선의 값을 for문 하나로 구하는 방법이 신기하다
