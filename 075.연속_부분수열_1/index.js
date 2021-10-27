@@ -25,8 +25,10 @@ function solution01(m, arr) {
   for (let rt = 0; rt < arr.length; rt++) {
     sum += arr[rt];
     if (sum === m) answer++;
+    console.log({ lt, rt, sum });
     while (sum >= m) {
       sum -= arr[lt++];
+      console.log({ inner: 'inner', lt, rt, sum });
       if (sum === m) answer++;
     }
   }

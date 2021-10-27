@@ -28,5 +28,53 @@
 ## 풀이
 
 ```js
+function solution(m, arr) {
+  const len = arr.length;
+  let count = 0;
+  let p1 = 0;
 
+  while (p1 < len) {
+    let p2 = p1;
+    let sum = 0;
+    while (p2 < len && sum < m) {
+      sum += arr[p2];
+      if (sum <= m) count++;
+      p2++;
+    }
+    p1++;
+  }
+  return count;
+}
+
+let a = [1, 3, 1, 2, 3];
+console.log(solution(5, a));
 ```
+
+- p1을 기준으로 오른쪽으로 p2를 증가시키며, 상태 관찰
+- 앞서 푼 '연속 부분 수열1'과 동일한 방식으로 해결
+
+## 선생님 풀이
+
+```js
+// 선생님 풀이
+function solution1(m, arr) {
+  const len = arr.length;
+  let count = 0;
+  let lt = 0; // move last
+  let rt = 0; // move first
+  let sum = 0;
+  while (rt < len) {
+    sum += arr[rt];
+
+    while (sum > m) {
+      sum -= arr[lt];
+      lt++;
+    }
+    if (sum <= m) count += rt - lt + 1; //  ! rt - lt + 1 그 수까지 포함한 수열의 개수
+    rt++;
+  }
+  return count;
+}
+```
+
+- `rt - lt + 1` 은 rt까지 포함한 수열의 개수를 나타낸다.
