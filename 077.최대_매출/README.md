@@ -51,9 +51,50 @@ console.log(solution(3, a));
 
 - rt를 k로 잡고, outer loop으로 arr 돌리기
 - lt를 rt-k로 잡고, inner loop으로 sum 구하기
+- 시간 복잡도 O(n^2)...............
 
+# sliding window
+- 쫙 밀어버리는 알고리즘
+1. 처음에 k만큼의 수의 합을 갖고 있다.
+2. 한 칸씩 우측으로 밀리면서 가장 우측 방향의 다음 수는 더하고, 가장 좌측의 가지고 있던 수는 뺀다.
 ## 선생님 풀이
 
 ```js
+/**
+ * !Sliding Window 활용 - 내 코드
+ */
+function solution1(k, arr) {
+  let sum = arr.reduce((sum, cur, idx) => (idx < k ? (sum += cur) : sum)); //  초기 k자리까지의 합
+  let max = sum; // 초기 max === 초기 sum
+
+  console.log({ init: sum });
+  for (let i = 0; i < arr.length - k; i++) {
+    sum -= arr[i];
+    sum += arr[i + k];
+    console.log({ sum });
+    max = max < sum ? sum : max;
+  }
+  return max;
+}
+/**
+ * !Sliding Window 활용 - 선생님 코드
+ */
+const solution2 = (k, arr) => {
+  let answer;
+  let sum = 0;
+  // 초기 k까지의 합
+  for (let i = 0; i < k; i++) sum += arr[i];
+  answer = sum;
+
+  //main loop
+  for (let i = k; i < arr.length; i++) {
+    sum += arr[i] - arr[i - k];
+    answer = Math.max(sum, answer);  // 최대값 Math.max() 잊지말자
+  }
+
+  return answer;
+};
 ```
 
+- 시간복잡도 O(n)!!!
+- 2개의 포인터를 잘 쓰면(loop의 기준점), 이중포문 없이 loop를 돌 수 있다. 꼭 기억하자.
