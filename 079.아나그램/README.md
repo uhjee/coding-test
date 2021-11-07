@@ -37,7 +37,7 @@ Anagram이란 두 문자열이 알파벳의 나열 순서를 다르지만 그 �
 ```js
 function solution(str1, str2) {
   let answer = 'NO';
-  // map으로 변환
+  // map으로 변환하는 함수 선언
   const getCharCount = str => {
     const m = new Map();
     for (let c of str) {
@@ -74,5 +74,29 @@ console.log(solution(a, b));
 ## 선생님 풀이
 
 ```js
+function solution1(str1, str2) {
+  let answer = 'YES';
+  let m = new Map();
+  for (let c of str1) {
+    if (!m.has(c)) m.set(c, 1);
+    else m.set(c, m.get(c) + 1);
+  }
 
+  // str2 에 char를 loop 돌면서 str1의 map 개수 차감
+  for (let c of str2) {
+    if (!m.has(c) || m.get(c) === 0) return 'NO';
+    m.set(c, m.get(c) - 1);
+  }
+  return answer;
+}
+
+// let a = 'AbaAeCe';
+// let b = 'baeeACA';
+
+let a = 'abaCC';
+let b = 'Caaab';
+console.log(solution1(a, b));
 ```
+
+- 두 번째 매개변수로 받는 str은 map을 변환하지 않고, loop을 돌면서 각 char 마다 기존 str1 의 map에서 값을 하나씩 차감한다.
+- 따라서 기존 str1의 map에 같은 key를 가진 페어가 없거나, value가 0 인 경우는 아나그램이 아니게 된다.
