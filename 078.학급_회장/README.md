@@ -54,6 +54,13 @@ console.log(solution(str));
 
 ## 선생님 풀이
 
+### Map
+- ES6에서 추가
+- object와 유사함
+- 차이점 존재(1. key의 타입, 2. iteration 여부 등)
+- `[key, value]` 형태로 존재
+
+
 ```js
 function solution1(s) {
   let answer;
