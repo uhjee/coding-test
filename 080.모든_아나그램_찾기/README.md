@@ -58,5 +58,68 @@ console.log(solution(a, b));
 ## 선생님 풀이
 
 ```js
+// map 2개 비교 (사이즈, key, value)
+const compareMap = (map1, map2) => {
+  console.log({ map1, map2 });
+  if (map1.size !== map2.size) return false;
 
+  for (const [key, val] of map2) {
+    // console.log({ key, val });
+    if (!map1.has(key) || map1.get(key) !== val) return false; // key, value 비교
+  }
+  return true;
+};
+const solution = (s, t) => {
+  let answer = 0;
+
+  let tH = new Map(); // 기준 문자열 Hash
+  let sH = new Map(); // 비교하려는 sliding window 문자열 Hash
+  for (let x of t) {
+    // 있으면 count up;
+    if (tH.has(x)) tH.set(x, tH.get(x) + 1);
+    // 없으면 set
+    else tH.set(x, 1);
+  }
+  //  기준 문자열 hash 초기 세팅
+  let tLen = t.length - 1;
+  for (let i = 0; i < tLen; i++) {
+    if (sH.has(s[i])) sH.set(s[i], sH.get(s[i]) + 1);
+    else sH.set(s[i], 1);
+  }
+
+  // 투 포인트
+  let lt = 0;
+  for (let rt = tLen; rt < s.length; rt++) {
+    // 다음 인덱스의 rt 값 sH에 세팅
+    if (sH.has(s[rt])) sH.set(s[rt], sH.get(s[rt]) + 1);
+    else sH.set(s[rt], 1);
+
+    // sH, tH 해쉬 비교 후 카운팅
+    if (compareMap(sH, tH)) answer++;
+
+    // console.log({ answer });
+    // lt 인덱스의 문자열을 해쉬에서 카운팅 -1
+    sH.set(s[lt], sH.get(s[lt]) - 1);
+    if (sH.get(s[lt]) === 0) sH.delete(s[lt]); // 값이 0이라면 key 삭제
+
+    lt++;
+  }
+  return answer;
+};
+
+let a = 'bacaAacba';
+let b = 'abc';
+console.log(solution(a, b));
 ```
+
+- Map 사용 (sH, tH)
+  - 기준 Map : `tH`
+  - 유동 Map : `sH`
+  - 두 개의 Map 계속 비교 `compareMap()` 함수 생성
+
+- 투 포인트 사용(sliding window)
+  - `rt`: 유동 Map 에 넣을 마지막점 (for문의 변수)
+  - `lt`: 유동 Map 에 넣을 시작점(`rt`가 하나 늘어날 때, `lt`도 한 개씩 늘어남)
+    - 유동 맵에 lt의 개수가 0개라면, 아예 `delete()`
+
+- 시간 복잡도 O(n)
