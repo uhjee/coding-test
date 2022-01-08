@@ -48,13 +48,35 @@ console.log(solution(a));
 - 배열을 stack으로 취급해서 풀이
 - `(` 인 경우, 계속 배열에 push
 - `)` 인 경우, 배열의 마지막 요소가 `(` 인 경우 pop (Array.prototype.splice 사용)
+  - Array.prototype.pop() api 가 있다.
 - 짝이 맞는다면, 마지막 stack length 가 0일 것이므로, `YES` 반환
 - 시간 복잡도 O(n)
 
 ## 선생님 풀이
 
 ```js
+// 선생님 풀이
+const solution1 = s => {
+  let answer = 'YES';
+  const stack = [];
 
+  for (const x of s) {
+    if (x === '(') stack.push(x);
+    else {
+      if (stack.length === 0) return 'NO'; // 짝이 안맞을 경우, early return 'NO'
+      stack.pop();
+    }
+  }
+  if (stack.length > 0) {
+    answer = 'NO';
+  }
+
+  return answer;
+};
+
+// let a = '(()(()))(()'; // NO
+let a = '(())()'; // YES
+console.log(solution1(a));
 ```
 
--
+- 크게 다를 것은 없으나, 괄호의 짝은 맞으나, `(` 가 먼저 입력되는 경우에는 early return 'NO'
