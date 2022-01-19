@@ -20,6 +20,27 @@ function solution(board, moves) {
   return answer;
 }
 
+function solution1(board, moves) {
+  let answer;
+  const stack = [];
+  moves.forEach((pos) => {
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][pos - 1] !== 0) {
+        let tmp = board[i][pos - 1];
+        board[i][pos - 1] = 0;
+        if (tmp === stack[stack.length - 1]) {
+          stack.pop();
+          answer += 2;
+        } else {
+          stack.push(tmp);
+        }
+        break;
+      }
+    }
+  });
+  return answer;
+}
+
 let a = [
   [0, 0, 0, 0, 0],
   [0, 0, 1, 0, 3],
