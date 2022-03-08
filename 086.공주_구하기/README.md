@@ -1,4 +1,4 @@
-# 공주 구하기
+# 공주 구하기 (Queue)
 
 정보 왕국의 이웃 나라 외동딸 공주가 숲속의 괴물에게 잡혀갔습니다.
 정보 왕국에는 왕자가 N명이 있는데 서로 공주를 구하러 가겠다고 합니다. 정보왕국의 왕은 다음과 같은 방법으로 공주를 구하러 갈 왕자를 결정하기로 했습니다.
@@ -31,24 +31,48 @@ N과 K가 주어질 때 공주를 구하러 갈 왕자의 번호를 출력하는
 ## 풀이
 
 ```js
+function solution(n, k) {
+  const arr = [];
+  for (let i = 1; i < n + 1; i++) {
+    arr.push(i);
+  }
+  while (arr.length > 1) {
+    for (let i = 0; i < k; i++) {
+      const [turn] = arr.splice(0, 1);
+      if (i !== k - 1) {
+        arr.push(turn);
+      }
+    }
+  }
+  return arr[0];
+}
 
+console.log(solution(8, 3));
 ```
 
-- 어려워서 선생님 기본 설명 듣고 품
-
-- 닫는 괄호
-  - 바로 앞이 여는 괄호라면, 레이저
-    - stack에서 바로 앞의 여는 괄호 제거
-    - 지금까지 stack에 쌓인 열린 괄호 갯수 cnt++
-  - 바로 앞이 여는 괄호가 아니라면, 쇠 막대기
-    - stack의 열린 괄호 하나 제거
-- string to number : Number({[string]}) 사용
-- 시간 복잡도 O(n)
+- 재귀를 돌릴까 하다가 그냥 2중 loop문을 돌렸다.
+- 환형 queue 구조를 만들기 위해 각 턴마다 배열의 맨 앞에서 제거 -> 다시 push 하는 과정으로 구현
+  - 이 과정에서 shift() 를 쓸까 하다가 성능이 떨어진다는 이야기가 있어 splice를 썼는데 비슷한 것 같다.
+- 시간 복잡도 O(n^2)
 
 ## 선생님 풀이
 
 ```js
-// 선생님 풀이
+const solution1 = (n, k) => {
+  let answer;
+  let queue = Array.from({ length: n }, (v, i) => ++i); // 1~8 까지 배열 생성
+
+  while (queue.length) {
+    for (let i = 1; i < k; i++) queue.push(queue.shift());
+    queue.shift(); // k번째 요소 빼기
+    if (queue.length === 1) answer = queue.shift();
+  }
+  return answer;
+};
+
+console.log(solution1(8, 3));
 ```
 
+- Array.from 으로 배열을 생성하는 방법이 신기하다. 유사배열을 매개변수로 받는다.
+- 난 if문으로 for문 내에서 복잡하게 구현했으나, 분기 처리 없이 흐름으로 구현
 - 시간 복잡도 O(n)
