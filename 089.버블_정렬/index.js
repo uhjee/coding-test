@@ -17,5 +17,18 @@ function solution(arr) {
   return arr;
 }
 
+function solution1(arr) {
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    // j는 arr 길이 - i - 1 까지만 돌면 된다. (-1 하는 이유는 j+1 와 비교하기 때문)
+    for (let j = 0; j < arr.length - i - 1; j += 1) {
+      // j가 루프를 도는 것 (옆 자리 숫자랑 비교)
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
+
 let arr = [13, 5, 11, 7, 23, 15];
-console.log(solution(arr));
+console.log(solution1(arr));

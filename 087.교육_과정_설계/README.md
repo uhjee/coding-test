@@ -1,4 +1,4 @@
-# 교육과정 설계
+# 교육과정 설계_queue
 
 현수는 1년 과정의 수업계획을 짜야 합니다.
 수업중에는 필수과목이 있습니다. 이 필수과목은 반드시 이수해야 하며, 그 순서도 정해져 있습니다.
@@ -54,7 +54,19 @@ console.log(solution(a, b));
 ## 선생님 풀이
 
 ```js
-
+const solution1 = (need, plan) => {
+  let answer = 'YES';
+  let queue = need.split('');
+  for (let x of plan) {
+    if (queue.includes(x)) {
+      // queue 에는 있으나, 맨 앞이 아닌 경우
+      if (x !== queue.shift()) return 'NO';
+    }
+  }
+  if (queue.length > 0) answer = 'NO';
+  return answer;
+};
 ```
 
+- loop문을 돌면서 포인터 값이 queue에는 있으나, 맨 앞이 아닌 경우 early return 하도록 처리
 - 시간 복잡도 O(n)

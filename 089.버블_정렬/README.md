@@ -57,7 +57,19 @@ console.log(solution(arr));
 ## 선생님 풀이
 
 ```js
-
+function solution1(arr) {
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    // j는 arr 길이 - i - 1 까지만 돌면 된다. (-1 하는 이유는 j+1 와 비교하기 때문)
+    for (let j = 0; j < arr.length - i - 1; j += 1) {
+      // j가 루프를 도는 것 (옆 자리 숫자랑 비교)
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
 ```
 
-- 시간 복잡도 O(n)
+- 내부 loop문에서 매번 자리를 바꾸기 때문에 선택 정렬보다는 성능이 안좋다.
+- 시간 복잡도 O(n^2)
