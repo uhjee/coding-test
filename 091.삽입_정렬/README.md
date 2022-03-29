@@ -51,6 +51,19 @@ console.log(solution(arr));
 ## 선생님 풀이
 
 ```js
+const solution1 = arr => {
+  let answer = [...arr];
+  for (let i = 0; i < arr.length; i++) {
+    let tmp = answer[i];
+    let j = null;
+    for (j = i - 1; j >= 0; j--) {
+      if (answer[j] > tmp) answer[j + 1] = answer[j];
+      else break;
+    }
+    answer[j + 1] = tmp;
+  }
+  return answer;
+};
 }
 ```
 
