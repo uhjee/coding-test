@@ -19,7 +19,8 @@
 - 9
 - 120 125 152 130 135 135 143 127 160
 
-### 출력예제 1 
+### 출력예제 1
+
 - 38
 
 - 출력해설 : 키 정보 152가 현수이고, 127이 현수 짝꿍입니다.
@@ -29,7 +30,8 @@
 - 6
 - 120 130 150 150 130 150
 
-### 출력예제 2 
+### 출력예제 2
+
 - 35
 
 ---
@@ -62,4 +64,17 @@ console.log(solution(arr2));
 ## 선생님 풀이
 
 ```js
+const solution1 = arr => {
+  let answer = [];
+  let sortArr = [...arr];
+  sortArr.sort((a, b) => a - b);
+  for (let i = 0; i < arr.length; i += 1) {
+    if (arr[i] !== sortArr[i]) answer.push(i + 1);
+  }
+  return answer;
+};
 ```
+
+- 새로운 배열로 정렬
+- 이후 인덱스로 두 배열을 비교하며, 앞은 현수 / 뒤는 짝수
+- 시간 복잡도 O(n)
