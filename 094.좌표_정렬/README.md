@@ -67,6 +67,21 @@ console.log(solution(arr));
 ## 선생님 풀이
 
 ```js
+const solution1 = arr => {
+  let answer = [...arr];
 
+  answer.sort((a, b) => {
+    if (a[0] === b[0]) return a[1] - b[1];
+    else return a[0] - b[0];
+  });
+  return answer;
+};
 ```
 
+- Array.prototype.sort() 사용
+- 0 번째 값이 같은 경우, 1번째 값으로 비교
+- 나머지 경우에는 기존 대로 비교
+- 시간 복잡도 모르겠음
+- sort() 내부 알고리즘
+  - 배열의 양쪽 끝부터 비교 후
+  - 다시 배열의 가운데 값을 차례대로 비교 -> 차이를 줄이는 듯
