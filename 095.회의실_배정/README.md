@@ -1,4 +1,4 @@
-# 회의실 배정
+# 회의실 배정(greedy)
 
 한 개의 회의실이 있는데 이를 사용하고자 하는 n개의 회의들에 대하여 회의실 사용표를 만들 려고 한다. 각 회의에 대해 시작시간과 끝나는 시간이 주어져 있고, 각 회의가 겹치지 않게 하 면서 회의실을 사용할 수 있는 최대수의 회의를 찾아라. 단, 회의는 한번 시작하면 중간에 중 단될 수 없으며 한 회의가 끝나는 것과 동시에 다음 회의가 시작될 수 있다.
 
@@ -45,7 +45,7 @@
 ```js
 function solution(meeting) {
   let answer = 0;
-  // 01. 그리드 정렬
+  // 01. 그리드 정렬 - 시작 시간 -> 끝나는 시간
   meeting.sort((a, b) => {
     if (a[0] === b[0]) {
       return a[1] - b[1];
@@ -63,7 +63,7 @@ function solution(meeting) {
       }
     }
     console.log(i, arr);
-    
+
     // 03. 배열 길이가 가장 큰 수를 answer에 할당
     answer = arr.length >= answer ? arr.length : answer;
   }
@@ -71,12 +71,33 @@ function solution(meeting) {
 }
 ```
 
+- 정렬 기준: 시작 시간 -> 끝나는 시간
 - 시간 복잡도 O(n^2)
 
 ## 선생님 풀이
 
 ```js
+const solution1 = meeting => {
+  let answer = 0;
 
+  meeting.sort((a, b) => {
+    if (a[1] === b[1]) return a[0] - b[0]; // 시작시간 비교
+    else return a[1] - b[1]; // 끝시간 비교
+  });
+  let endTime = 0; // 끝나는 시간
+
+  for (let x of meeting) {
+    // x는 다음 회의
+    if (x[0] >= endTime) {
+      answer++;
+      endTime = x[1]; // 끝나는 시간 할당
+    }
+  }
+
+  return answer;
+};
 ```
-
-- 다시 배열의 가운데 값을 차례대로 비교 -> 차이를 줄이는 듯
+- Greedy 의 대표 문제
+- 정렬 기준: 끝나는 시간 -> 시작 시간
+- 다음 회의 가능 판단 기준: x 번째의 끝나는 시간 <= x+1 번째의 시작 시간
+- 정렬 후, 첫 번째 포인터는 무조건 회의실 배정
