@@ -71,10 +71,45 @@ console.log(solution(3, arr));
 - lt: 가능 최소의 거리(1)
 - rt: 가능한 최대의 거리(가장 큰 좌표)
 - count 함수
-  - 주어진 mid값(거리)로 말을 넣을 수 있는 좌표의 갯수 리턴
+  - 주어진 mid값(거리)로 말을 넣을 수 있는 좌표의 개수 리턴
 
 ### 선생님 풀이
 
 ```js
+function count1(stable, dist) {
+  let cnt = 1;
+  let endPosition = stable[0]; // 첫 번째 말은 무조건 넣는 것
+  for (let i = 1; i < stable.length; i++) {
+    if (stable[i] - endPosition >= dist) {
+      cnt++;
+      endPosition = stable[i];
+    }
+  }
+  return cnt;
+}
+
+function solution1(c, stable) {
+  let answer;
+  stable.sort((a, b) => a - b);
+  let lt = 1;
+  let rt = stable[stable.length - 1]; // 맨 끝 (가장 큰 값)
+  while (lt <= rt) {
+    let mid = parseInt((lt + rt) / 2);
+    if (count1(stable, mid) >= c) {
+      answer = mid; // 더 많이 들어갈 수 있는 경우는 정답의 범위에 포함
+      lt = mid + 1;
+    } else {
+      rt = mid - 1;
+    }
+  }
+  return answer;
+}
+
+let arr = [1, 2, 8, 4, 9];
+console.log(solution1(3, arr));
 
 ```
+- 이분 검색 사용
+- count 함수
+  - endPoint: 이전에 말이 자리한 마구간 좌표
+- count 의 결과가 주어진 말의 마리 수보다 크거나 같은 경우는 정답의 범주에 포함
