@@ -40,12 +40,28 @@ console.log(solution(n));
 
 - 재귀 함수로 호출되는 counter 함수 생성
 - i 파라미터로 인덱스를 다음 재귀함수 호출 시 전달
-
+- 0부터 증가
 
 ### 선생님 풀이
 
 ```js
-
+function solution1(n) {
+  /**
+   * DFS:  깊이 우선 탐색 - 재귀함수
+   * @param   {[type]}  L  level 약자
+   * @return  {[type]}     [return description]
+   */
+  function DFS(L) {
+    if (L == 0) return; // 재귀 호출 break;
+    else {
+      DFS(L - 1); // 내부 호출부터 실행
+      console.log(L);
+    }
+  }
+  DFS(n);
+}
 ```
 
-- 이분 검색 사용
+- 재귀함수가 돌아가는 원리 -> stack frame
+- 마지막 숫자부터 n-- (감소)
+- call stack에 함수가 쌓이는 이미지 기억하기
