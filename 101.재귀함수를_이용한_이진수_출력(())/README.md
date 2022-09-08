@@ -1,67 +1,77 @@
-# 재귀함수와 스택프레임 \*\*\*
+# 재귀함수를 이용한 이진수 출력 \*\*\*
 
-자연수 N이 입력되면 재귀함수를 이용하여 1부터 N까지를 출력하는 프로그램을 작성하세요.
+10진수 N이 입력되면 2진수로 변환하여 출력하는 프로그램을 작성하세요. 단 재귀함수를 이용해서 출력해야 합니다.
 
 ### 입력설명
 
-- 첫 번째 줄은 정수 N(3<=N<=10)이 입력된다.
+- 첫 번째 줄에 10진수 N(1<=N<=1,000)이 주어집니다.
 
 ### 출력설명
 
-- 첫째 줄에 출력한다.
+- 첫 번째 줄에 이진수를 출력하세요.
 
 ### 입력예제 1
 
-- 3
+- 11
 
 ### 출력예제 1
 
-- 123
+- 1011
 
 ---
 
 ## 풀이
 
 ```js
-const counter = (i, last) => {
-  if (i > last) return;
-  let j = i;
-  console.log(j++);
-  counter(j, last);
-};
+function solution(n) {
+  const notation = 2; // 2진법: n진법이면 숫자만 바꾸면 됨
 
-const solution = n => {
-  counter(1, n);
-};
+  const DFS = (L) => {
+    const devided = Math.floor(L / notation); // 소수점 이하는 버린 나눈 몫
+    const remainder = L % notation; // 나머지 값
+    // console.log(L, devided, remainder);
+    if (devided === 0) {
+      return remainder;
+    } else {
+      return `${DFS(devided)}${remainder}`;
+    }
+  };
 
-const n = 3;
-console.log(solution(n));
+  return Number(DFS(n));
+}
+
+console.log(solution(11));
 ```
 
-- 재귀 함수로 호출되는 counter 함수 생성
-- i 파라미터로 인덱스를 다음 재귀함수 호출 시 전달
-- 0부터 증가
+- 재귀 함수로 호출되는 DFS(깊이 우선 탐색) 함수 생성
+- 2진수 변환하는 방법
+  ![binary__00](./binary_00.png){: width="70%" height="70%"}
+  - 10진수의 수를 2로 나눈 값이 0이 될 때까지 나눈다.
+  - 위 과정에서의 나머지 값을 거꾸로 붙이면 진수 변환 완성
+
+- 재귀 함수 생성
+  - 숫자를 인자로 받아 2로 나눈 나머지 값을 반환
+  - 인자로 받은 숫자를 2로 나눈 값이 0일 경우(소수점 버림), 재귀 호출 멈춤
 
 ### 선생님 풀이
 
 ```js
 function solution1(n) {
-  /**
-   * DFS:  깊이 우선 탐색 - 재귀함수
-   * @param   {[type]}  L  level 약자
-   * @return  {[type]}     [return description]
-   */
-  function DFS(L) {
-    if (L == 0) return; // 재귀 호출 break;
+  let answer = ''; // 재귀 함수 상위 스코프에 변수 생성
+  const DFS = (n) => {
+    if (n === 0) return;
     else {
-      DFS(L - 1); // 내부 호출부터 실행
-      console.log(L);
+      DFS(parseInt(n / 2));
+      answer += n % 2;
     }
-  }
+  };
   DFS(n);
+
+  return answer;
 }
+
+console.log(solution1(11));
 ```
 
-- 재귀함수가 돌아가는 원리 -> stack frame
-- 마지막 숫자부터 n-- (감소)
-- call stack에 함수가 쌓이는 이미지 기억하기
+- 재귀 함수 자체가 값을 반환하는 방법이 아닌, 재귀 함수 내에서 바깥 스코프의 변수에 접근해서 재할당하는 방법으로 구현
+
