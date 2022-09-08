@@ -31,7 +31,6 @@ N개의 수로 이루어진 수열이 주어집니다.
 ## 풀이
 
 ```js
-<<<<<<< HEAD
 function solution(m, arr) {
   const len = arr.length;
   let count = 0;
