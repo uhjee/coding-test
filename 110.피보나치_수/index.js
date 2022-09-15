@@ -1,20 +1,14 @@
 function solution(n) {
   var answer = 0;
-  let p1 = 1;
-  let p2 = 2;
-  let sum = p1;
-  while (p1 <= n) {
-    if (sum < n) {
-      sum += p2++;
-    } else if (sum > n) {
-      sum -= p1++;
-    } else {
-      sum += p2++;
-      sum -= p1++;
-      answer++;
-    }
+
+  const arr = new Array(n + 1).fill(0);
+  arr[0] = 0;
+  arr[1] = 1;
+  for (let i = 2; i < n + 1; i++) {
+    arr[i] = (arr[i - 1] + arr[i - 2]) % 1234567;
   }
+  answer = arr[n];
   return answer;
 }
 
-console.log(solution(15)); // 4
+console.log(solution(3)); // 2
