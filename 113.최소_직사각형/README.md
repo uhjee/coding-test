@@ -52,28 +52,54 @@
 ## 풀이
 
 ```js
-function solution(brown, yellow) {
-  var answer = [];
-  const sum = brown + yellow;
-  for (let i = 3; i < sum; i++) {
-    if ((i - 2) * (sum / i - 2) === yellow) {
-      answer[0] = sum / i;
-      answer[1] = i;
-      break;
+function solution(sizes) {
+  var answer = 0;
+  const arr = sizes.map(([w, h]) => [Math.max(w, h), Math.min(w, h)]);
+  arr.sort((a, b) => {
+    if (a[0] > b[0]) {
+      return -1;
+    } else if (a[0] === b[0]) {
+      return b[1] - a[1];
+    } else {
+      return 1;
     }
-  }
+  });
+  const [first, ...rest] = arr;
+  rest.sort((a, b) => b[1] - a[1]);
+  const second = rest.find(([f, s]) => s > first[1]);
+
+  answer = first[0] * (!second ? first[1] : second[1]);
   return answer;
 }
 
-// console.log(solution(10, 2)); // [4,3]
-console.log(solution(24, 24)); // [8,6]
+console.log(
+  solution([
+    [60, 50],
+    [30, 70],
+    [60, 30],
+    [80, 40],
+  ]),
+); //4000
 ```
 
-- 완전 탐색 알고리즘 사용
-  - **완전 탐색**이란?
-    - 모든 경우의 수를 체크해서 정답을 찾는 방법
-    - 효율성의 측면에선 좋지 않다.
+- 먼저 너비, 높이 구분 없이 순차적으로 mapping
+- 이후 정렬(DESC)해 첫 번째 값이 가장 큰 요소 찾은 후
+- 이후 요소 중 높이가 가장 큰 요소 서칭
+- 가독성도 조히 않고, 직관적이지도 않은 코드..
 
-### 참고
+### 고수 풀이
 
-- [완전탐색 기법이란?](https://hongjw1938.tistory.com/78)
+```js
+function solution(sizes) {
+  const rotated = sizes.map(([w, h]) => (w < h ? [h, w] : [w, h]));
+
+  let maxSize = [0, 0];
+  rotated.forEach(([w, h]) => {
+    if (w > maxSize[0]) maxSize[0] = w;
+    if (h > maxSize[1]) maxSize[1] = h;
+  });
+  return maxSize[0] * maxSize[1];
+}
+```
+
+- 
