@@ -26,5 +26,31 @@
 ## 풀이
 
 ```js
+function solution(n, a, b) {
+  var answer = 0;
+
+  // a와 b 오름차순으로 할당
+  let first = Math.min(a, b);
+  let second = Math.max(a, b);
+
+  const maxCnt = Math.log2(n); // 반복문이 돌 횟수 (2의 지수)
+
+  for (let i = 1; i < maxCnt + 1; i++) {
+    // first가 홀수여야 하고, 차이값이 1일 경우 => 둘이 붙게되는 경우
+    if (first % 2 === 1 && second - first === 1) return i;
+    first = Math.ceil(first / 2);
+    second = Math.ceil(second / 2);
+  }
+  return answer;
+}
+
+console.log(solution(8, 4, 7)); // 3
+console.log(solution(16, 1, 16)); // 4
+console.log(solution(16, 9, 12)); // 2
+console.log(solution(8, 4, 5)); // 3
 ```
 
+- 반복문을 돌며 2로 계속 나눠 간다. (1을 제외하고, 모두 짝수로 맞추기 위해 올림(ceil) 처리)
+- 까다로웠던 점은 총 8명에 4번, 5번이 주어진 케이스
+  - 4, 5는 1라운드에서 붙지 않는다. 
+  - 따라서 조건문에 first가 홀수인 경우 추가
