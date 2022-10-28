@@ -41,24 +41,27 @@
 ## 풀이
 
 ```js
-function solution(n) {
+function solution(ingredient) {
   var answer = 0;
-
-  const DFS = (rest) => {
-    if (rest <= 0) {
-      if (rest === 0) answer++;
-      return;
-    } else {
-      DFS(rest - (1 % 1234567));
-      DFS(rest - (2 % 1234567));
+  const stack = [];
+  for (const item of ingredient) {
+    stack.push(item);
+    if (stack.length > 3) {
+      if (
+        stack[stack.length - 4] === 1 &&
+        stack[stack.length - 3] === 2 &&
+        stack[stack.length - 2] === 3 &&
+        stack[stack.length - 1] === 1
+      ) {
+        answer++;
+        stack.splice(-4);
+      }
     }
-  };
-  DFS(n % 1234567);
+  }
   return answer;
 }
 
-console.log(solution(3)); // 3
-console.log(solution(4)); // 5
+console.log(solution([2, 1, 1, 2, 3, 1, 2, 3, 1]));
 ```
 
-- 완전 탐색(DFS) 로 풀었지만, 당연히 효율성 측면에서 나쁘게 측정
+- stack 을 이용해서 풀이

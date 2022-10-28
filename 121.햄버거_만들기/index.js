@@ -12,7 +12,7 @@ function solution(ingredient) {
         stack[stack.length - 1] === 1
       ) {
         answer++;
-        stack.splice(stack.length - 4, 4);
+        stack.splice(-4);
       }
     }
   }
