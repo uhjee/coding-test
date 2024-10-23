@@ -149,5 +149,5 @@ const solution3 = (answers) => {
   return result;
 };
 ```
-- 배열을 따로 만들지 않고, 바로 결과를 반환하고 있음
+- max 값을 뽑은 뒤, 다시 요소와 max값을 비교
 - 정렬을 따로 하지 않음
