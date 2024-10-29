@@ -103,3 +103,40 @@ function solution(N, stages) {
     .map(i => i.key);
 }
 ```
+
+```js
+const solution = (n, stages) => {
+  // 스테이지 별 도전자 수
+  const challengerCnt = Array.from({ length: n + 2 }, () => 0);
+  stages.forEach(s => {
+    challengerCnt[s] += 1;
+  });
+  console.log(challengerCnt);
+  // 실패율 맵
+  const fails = {};
+
+  // 모든 도전자 수
+  let totalCnt = stages.length;
+  for (let i = 1; i <= n; i++) {
+    // 머물러있는 도전자가 없는 경우
+    if (challengerCnt[i] === 0) {
+      fails[i] = 0;
+      continue;
+    }
+    // 실패율 계산
+    fails[i] = challengerCnt[i] / totalCnt;
+    // 다음 순회에서 사용될 total 세팅
+    totalCnt -= challengerCnt[i];
+  }
+  // 실패율 내림차순 정렬 => 스테이지 번호 반환
+  return Object.entries(fails)
+    .sort((a, b) => b[1] - a[1])
+    .map(([i, v]) => +i);
+};
+```
+- 시간복잡도 : O(NlogN)
+- challengerCnt 배열 생성 시, length를 n+2로 설정한 이유
+  - 마지막 스테이지에 도달한 사람도 카운팅하기 위함
+  - 인덱스를 stage로 사용하면 편의성이 향상되므로 [0] 인덱스는 사용하지 않지만 포함해서 생성
+- totalCnt 변수 사용 이유
+  - 매 순회마다 도전자 수를 계산하는 것이 아니라 한번만 계산하고 사용하기 위함 
