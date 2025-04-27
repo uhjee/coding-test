@@ -26,7 +26,7 @@ n과 k가 주어질 때 마지막에 살아있는 사람의 번호를 반환하�
 ## 풀이
 
 ```js
-// Queue 구현
+// Queue 구현 - 연결리스트처럼 구현
 class Node {
   constructor(data) {
     this.data = data;
@@ -91,3 +91,25 @@ console.log(solution(5, 2));
 - n은 n의 길이
 - k는 k의 수
 - Queue의 push, pop 연산은 모두 O(1)의 시간 복잡도
+
+### Queue - Javascript 배열을 활용해 간략하게 구현
+
+```ts
+class Queue {
+  items = [];
+  front = 0;
+  rear = 0;
+
+  push(item) {
+    this.items.push(item);
+    this.rear++;
+  }
+
+  pop() {
+    this.items[this.front++];
+  }
+  size() {
+    return this.rear - this.front;
+  }
+}
+```

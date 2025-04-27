@@ -1,4 +1,4 @@
-// Queue 구현
+// Queue 구현 - 연결 리스트처럼 구현
 class Node {
   constructor(data) {
     this.data = data;
